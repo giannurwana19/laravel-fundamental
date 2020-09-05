@@ -1,1 +1,0 @@
-show the premium of series
