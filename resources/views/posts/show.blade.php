@@ -1,5 +1,5 @@
 @extends('templates.app')
-@section('title', $slug)
+@section('title', $post->title)
 @section('content')
-  <p>{{ $slug }}</p>
+  <h1>{{ $post->title }}</h1>
 @endsection
