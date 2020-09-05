@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController');
 
-Route::get('post/{slug}', 'PostController@show');
+Route::get('post/{post:slug}', 'PostController@show');
 
 Route::view('contact', 'contact');
 Route::view('about', 'about');
@@ -83,3 +83,9 @@ Route::view('login', 'login');
 // });
 
 // http://127.0.0.1:8000/?name=andi
+
+
+// p: misal kita ingin mengirim 2 parameter
+// yaitu name dan slug
+
+// Route::get('post/{category:name}/{post:slug}', 'PostController@show');

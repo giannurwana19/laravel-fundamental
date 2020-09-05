@@ -7,14 +7,9 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function show($slug)
+    public function show(Post $post)
     {
-        $post = Post::where('slug', $slug)->firstOrFail();
-
-        // k: jika post nya kosong
-        // if(!$post){ // atau is_null($post) 
-        //     abort(404); // redirect ke page 404
-        // }
+        // $post = Post::where('slug', $slug)->firstOrFail();
 
         return view('posts.show', compact('post'));
     }
