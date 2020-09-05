@@ -14,30 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// karena ini method invoke, kita tidak perlu menulis methodnya
+
 Route::get('/', 'HomeController');
+
+Route::get('post/{slug}', 'PostController@show');
 
 Route::view('contact', 'contact');
 Route::view('about', 'about');
 Route::view('login', 'login');
 
-
-// Route::get('/', function () {
-//     $name = request('name');
-//     return view('home', ['name' => $name]);
-// });
-
-// Route::get('contact', function(){
-//     return request()->is('contact') ? 'sama' : 'tidak';
-// });
-
-// Route::get('about', function(Request $request){
-//     return $request->fullUrl();
-// });
-
-// Route::get('login', function(Request $request){
-//     return $request->fullUrl();
-// });
 
 
 
