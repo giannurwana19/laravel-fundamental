@@ -14,13 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+// karena ini method invoke, kita tidak perlu menulis methodnya
+Route::get('/', 'HomeController');
 
 Route::view('contact', 'contact');
 Route::view('about', 'about');
 Route::view('login', 'login');
+
+
+// Route::get('/', function () {
+//     $name = request('name');
+//     return view('home', ['name' => $name]);
+// });
 
 // Route::get('contact', function(){
 //     return request()->is('contact') ? 'sama' : 'tidak';
@@ -85,3 +90,11 @@ Route::view('login', 'login');
 // Route::get('contact', function () {
 //     return request()->path() == 'contact' ? true : false;
 // });
+
+// p: passing data dari request dan controller
+// Route::get('/', function () {
+//     $name = request('name');
+//     return view('home', ['name' => $name]);
+// });
+
+// http://127.0.0.1:8000/?name=andi
