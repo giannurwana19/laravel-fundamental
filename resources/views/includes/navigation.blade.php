@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
 
-    <a class="navbar-brand" href="#">Laravel 7</a>
+    <a class="navbar-brand" href="{{ url('/') }}">Laravel 7</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -9,17 +9,17 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
+        <li class="nav-item{{ request()->is('/') ? ' active' : '' }}">
           <a class="nav-link" href="{{ url('/') }}">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url('about') }}">About</a>
+          <a class="nav-link{{ request()->is('about') ? ' active' : '' }}" href="{{ url('about') }}">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url('contact') }}">Contact</a>
+          <a class="nav-link{{ request()->is('contact') ? ' active' : '' }}" href="{{ url('contact') }}">Contact</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url('login') }}">Login</a>
+          <a class="nav-link{{ request()->is('login') ? ' active' : '' }}" href="{{ url('login') }}">Login</a>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
@@ -27,6 +27,6 @@
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
     </div>
-    
+
   </div>
 </nav>
