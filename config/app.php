@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'id', // kita bisa ganti jadi b.indonesia (id)
+    'locale' => 'en', // kita bisa ganti jadi b.indonesia (id)
 
     /*
     |--------------------------------------------------------------------------

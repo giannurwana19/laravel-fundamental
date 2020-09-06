@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -20,18 +21,14 @@ class PostController extends Controller
         return view('posts.create');
     }
 
-    // k: kita juga bisa gunakan helper request()
-    public function store(Request $request)
+    // k: implementasi PostRequest (sudah divalidasi) yang kita buat
+    public function store(PostRequest $request)
     {
-        $request->validate([
-            'title' => 'required|min:3',
-            'body' => 'required'
-        ]);
+        $attr = $request->all();
 
-        $post = $request->all();
-        $post['slug'] = Str::slug($request->title);
+        $attr['slug'] = Str::slug($request->title);
 
-        Post::create($post);
+        Post::create($attr);
 
         // buat session
         session()->flash('success', 'The post was created!');
@@ -49,12 +46,11 @@ class PostController extends Controller
         return view('posts.edit', compact('post'));
     }
 
+    // k: implementasikan method validateRequest() yg dibawah
     public function update(Post $post)
     {
-        $attr = request()->validate([
-            'title' => 'required|min:3',
-            'body' => 'required'
-        ]);
+        // panggil method yg dibawah
+        $attr = $this->validateRequest();
 
         // untuk slug disarankan tidak diubah
         $post->update($attr);
@@ -63,6 +59,15 @@ class PostController extends Controller
         session()->flash('success', 'The post was updated!');
 
         return redirect()->to('post');
+    }
+
+    // method untuk validasi
+    public function validateRequest()
+    {
+        return request()->validate([
+            'title' => 'required|min:3',
+            'body' => 'required'
+        ]);
     }
 
 }
