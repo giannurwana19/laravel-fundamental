@@ -61,6 +61,15 @@ class PostController extends Controller
         return redirect()->to('post');
     }
 
+    public function destroy(Post $post)
+    {
+        $post->delete();
+
+        session()->flash('success', 'The post was deleted!');
+
+        return redirect('post');
+    }
+
     // method untuk validasi
     public function validateRequest()
     {
