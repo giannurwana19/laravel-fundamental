@@ -16,6 +16,7 @@
 
   <div class="py-4">
     <div class="container">
+      @include('comp.alert-session')
       @yield('content')
     </div>
   </div>

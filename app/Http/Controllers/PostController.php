@@ -33,17 +33,10 @@ class PostController extends Controller
 
         Post::create($post);
 
-        return back();
+        // buat session
+        session()->flash('success', 'The post was created!');
 
-        // k: dengan helper request() & langsung validasi
-        // $attr = request()->validate([
-        //     'title' => 'required|min:3',
-        //     'body' => 'required'
-        // ]);
-
-        // $attr['slug'] = Str::slug($request->title);
-
-        // Post::create($attr);
+        return redirect()->to('post');
     }
 
     public function show(Post $post)
