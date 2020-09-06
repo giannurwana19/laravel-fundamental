@@ -25,8 +25,9 @@
         </div>
         <a href="{{ route('post.show', $post->slug) }}">Read More</a>
       </div>
-      <div class="card-footer">
+      <div class="card-footer d-flex justify-content-between">
         <small>Published on {{ $post->created_at->diffForHumans() }}</small>
+        <a href="{{ route('post.edit', $post->slug) }}" class="btn btn-success btn-sm font-weight-bold">Edit</a>
       </div>
     </div>
   </div>
