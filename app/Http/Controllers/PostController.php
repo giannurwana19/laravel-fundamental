@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -11,7 +12,7 @@ class PostController extends Controller
     {
         // k: mengambil semua data
         // return Post::get();
-        $posts = Post::paginate(4);
+        $posts = Post::paginate(6);
         
         // k: mengambil hanya title dan slug saja
         // return Post::get(['title', 'slug']);
@@ -20,10 +21,28 @@ class PostController extends Controller
         return view('posts.index', compact('posts'));
     }
 
+    public function create()
+    {
+        return view('posts.create');
+    }
+
+    public function store(Request $request)
+    {
+        $post = new Post;
+        $post->title = $request->title;
+        $post->slug = Str::slug($request->slug);
+        $post->body = $request->body;
+        $post->save();
+
+        // return redirect()->to('post'); // arahkan ke path
+        return back(); // kembali ke halaman create
+    }
+
     public function show(Post $post)
     {
         // $post = Post::where('slug', $slug)->firstOrFail();
 
         return view('posts.show', compact('post'));
     }
+
 }
