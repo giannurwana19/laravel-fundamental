@@ -3,7 +3,15 @@
 @section('content')
 <h1>{{ $post->title }}</h1>
 <div class="text-secondary">
-  <a href="{{ route('category.show', $post->category->slug) }}">{{ $post->category->name }}</a> &middot; {{ $post->created_at->format('d F Y') }} <hr>
+  <a href="{{ route('category.show', $post->category->slug) }}">{{ $post->category->name }}</a> &middot; {{ $post->created_at->format('d F Y') }}
+  &middot; 
+  
+  {{-- tags --}}
+  @foreach ($post->tags as $tag)
+  <a href="">{{ $tag->name }}</a>
+  @endforeach
+
+  <hr>
 </div>
 <p>{{ $post->body }}</p>
 
