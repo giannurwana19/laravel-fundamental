@@ -2,6 +2,9 @@
 @section('title', $post->title)
 @section('content')
 <h1>{{ $post->title }}</h1>
+<div class="text-secondary">
+  {{ $post->category->name }} &middot; {{ $post->created_at->format('d F Y') }} <hr>
+</div>
 <p>{{ $post->body }}</p>
 
 <button type="button" class="btn btn-danger font-weight-bold" data-toggle="modal" data-target="#deleteModal">
