@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>@yield('title')</title>
   <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+  <link href="{{ asset('assets') }}/css/select2.min.css" rel="stylesheet" />
 
   @stack('css')
 </head>
@@ -24,6 +25,14 @@
   <script src="{{ asset('assets') }}/js/jquery.min.js"></script>
   <script src="{{ asset('assets') }}/js/popper.min.js"></script>
   <script src="{{ asset('assets') }}/js/bootstrap.min.js"></script>
+  <script src="{{ asset('assets') }}/js/select2.min.js"></script>
+  <script>
+    $(document).ready(function() {
+    $('.select2').select2({
+      placeholder: "Choose some tags"
+    });
+    });
+  </script>
   @stack('scripts')
 </body>
 

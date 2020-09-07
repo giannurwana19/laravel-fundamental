@@ -23,6 +23,35 @@
           </div>
 
           <div class="form-group">
+            <label for="category">Category</label>
+            <select name="category" id="category" class="custom-select @error('category') is-invalid @enderror">
+              <option disabled selected>Choose One</option>
+              @foreach ($categories as $category)
+              <option value="{{ $category->id }}">{{ $category->name }}</option>
+              @endforeach
+            </select>
+            @error('category')
+            <div class="invalid-feedback">
+              {{ $message }}
+            </div>
+            @enderror
+          </div>
+
+          <div class="form-group">
+            <label for="tags">Tag</label>
+            <select name="tags[]" id="tags" class="custom-select select2 @error('tags') is-invalid @enderror" multiple>
+              @foreach ($tags as $tag)
+              <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+              @endforeach
+            </select>
+            @error('tags')
+            <div class="invalid-feedback">
+              {{ $message }}
+            </div>
+            @enderror
+          </div>
+
+          <div class="form-group">
             <label for="body">Body</label>
             <textarea name="body" class="form-control @error('body') is-invalid @enderror" id="body"
               rows="3"></textarea>

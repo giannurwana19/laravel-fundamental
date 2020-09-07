@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\{Category, Post, Tag}; // mmenyederhanakan namespace yg sama
 use App\Http\Requests\PostRequest;
-use App\Post;
+// use App\Post;
+// use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -18,18 +20,23 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('posts.create', compact('categories', 'tags'));
     }
 
-    // k: implementasi PostRequest (sudah divalidasi) yang kita buat
     public function store(PostRequest $request)
     {
         $attr = $request->all();
 
         $attr['slug'] = Str::slug($request->title);
+        // tambahkan category ke post
+        $attr['category_id'] = $request->category;
 
-        Post::create($attr);
-
+        $post = Post::create($attr);
+        // tambahkan tag ke post
+        $post->tags()->attach($request->tags);
+        
         // buat session
         session()->flash('success', 'The post was created!');
 
@@ -43,7 +50,9 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('posts.edit', compact('post', 'categories', 'tags'));
     }
 
     // k: implementasikan method validateRequest() yg dibawah
@@ -51,9 +60,12 @@ class PostController extends Controller
     {
         // panggil method yg dibawah
         $attr = $this->validateRequest();
+        $attr['category_id'] = request()->category;
 
         // untuk slug disarankan tidak diubah
         $post->update($attr);
+
+        $post->tags()->sync(request()->tags);
 
         // buat session
         session()->flash('success', 'The post was updated!');
@@ -63,6 +75,7 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        $post->tags()->detach();
         $post->delete();
 
         session()->flash('success', 'The post was deleted!');
@@ -75,7 +88,9 @@ class PostController extends Controller
     {
         return request()->validate([
             'title' => 'required|min:3',
-            'body' => 'required'
+            'body' => 'required',
+            'category' => 'required',
+            'tags' => 'array|required'
         ]);
     }
 
