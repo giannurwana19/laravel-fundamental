@@ -27,6 +27,8 @@ Route::get('post/{post:slug}', 'PostController@show')->name('post.show');
 
 Route::get('category/{category:slug}', 'CategoryController@show')->name('category.show');
 
+Route::get('tag/{tag:slug}', 'TagController@show')->name('tag.show');
+
 Route::view('contact', 'contact');
 Route::view('about', 'about');
 Route::view('login', 'login');

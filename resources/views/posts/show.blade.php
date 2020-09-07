@@ -1,6 +1,7 @@
 @extends('templates.app')
 @section('title', $post->title)
 @section('content')
+
 <h1>{{ $post->title }}</h1>
 <div class="text-secondary">
   <a href="{{ route('category.show', $post->category->slug) }}">{{ $post->category->name }}</a> &middot; {{ $post->created_at->format('d F Y') }}
@@ -8,7 +9,7 @@
   
   {{-- tags --}}
   @foreach ($post->tags as $tag)
-  <a href="">{{ $tag->name }}</a>
+  <a href="{{ route('tag.show', $tag->slug) }}" class="badge badge-info">{{ $tag->name }}</a>
   @endforeach
 
   <hr>
