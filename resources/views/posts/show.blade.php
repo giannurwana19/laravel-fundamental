@@ -3,7 +3,7 @@
 @section('content')
 <h1>{{ $post->title }}</h1>
 <div class="text-secondary">
-  {{ $post->category->name }} &middot; {{ $post->created_at->format('d F Y') }} <hr>
+  <a href="{{ route('category.show', $post->category->slug) }}">{{ $post->category->name }}</a> &middot; {{ $post->created_at->format('d F Y') }} <hr>
 </div>
 <p>{{ $post->body }}</p>
 

@@ -25,6 +25,7 @@ Route::delete('post/{post:slug}', 'PostController@destroy')->name('post.destroy'
 Route::post('post/store', 'PostController@store')->name('post.store');
 Route::get('post/{post:slug}', 'PostController@show')->name('post.show');
 
+Route::get('category/{category:slug}', 'CategoryController@show')->name('category.show');
 
 Route::view('contact', 'contact');
 Route::view('about', 'about');
