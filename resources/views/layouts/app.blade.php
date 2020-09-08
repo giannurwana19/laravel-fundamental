@@ -24,6 +24,7 @@
         @include('includes.navigation')
 
         <main class="py-4">
+            @include('comp.alert-session')
             <div class="container">
                 @yield('content')
             </div>

@@ -17,6 +17,14 @@ class Post extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+
+    // k: one to many
+    // bisa juga user()
+    // jika namanya beda, definisikan foreign key nya 
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
 
 

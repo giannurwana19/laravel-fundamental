@@ -2,6 +2,7 @@
 
 use App\Category;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
 {
@@ -16,7 +17,7 @@ class CategorySeeder extends Seeder
         $categories->each(function ($c){
             Category::create([
                 'name' => $c,
-                'slug' => strtolower($c)
+                'slug' => Str::slug(strtolower($c))
             ]);
         });
     }

@@ -14,8 +14,8 @@ class PostController extends Controller
     // k: kita bisa gunakan __construct() jalankan middleware
     // public function __construct()
     // {
-        // p: lindungi semua method, harus login dulu
-        // p: kecuali index & show
+    // p: lindungi semua method, harus login dulu
+    // p: kecuali index & show
     //     $this->middleware('auth')->except(['index', 'show']);    
     // }
 
@@ -38,13 +38,12 @@ class PostController extends Controller
         $attr = $request->all();
 
         $attr['slug'] = Str::slug($request->title);
-        // tambahkan category ke post
-        $attr['category_id'] = $request->category;
+        $attr['category_id'] = $request->category; // + category -> post
 
-        $post = Post::create($attr);
-        // tambahkan tag ke post
-        $post->tags()->attach($request->tags);
-        
+        // + post dari user yg login
+        $post = auth()->user()->posts()->create($attr);
+        $post->tags()->attach($request->tags); // + tag -> post
+
         // buat session
         session()->flash('success', 'The post was created!');
 
@@ -83,12 +82,18 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        $post->tags()->detach();
-        $post->delete();
+        if (auth()->user()->is($post->author)) {
+            $post->tags()->detach();
+            $post->delete();
 
-        session()->flash('success', 'The post was deleted!');
+            session()->flash('success', 'The post was deleted!');
 
-        return redirect('post');
+            return redirect('post');
+        } else {
+            session()->flash('error', "it wasn't your post!" );
+
+            return redirect()->route('post.index');
+        }
     }
 
     // method untuk validasi
@@ -101,5 +106,4 @@ class PostController extends Controller
             'tags' => 'array|required'
         ]);
     }
-
 }

@@ -17,7 +17,16 @@
 </div>
 <p>{{ $post->body }}</p>
 
-@auth
+<div class="text-secondary mb-2">
+  Wrote By : {{ $post->author->name }}
+</div>
+
+{{-- cek jika user nya yg punya post, maka bisa menghapus   --}}
+{{-- @if(auth()->user()->id == $post->user_id) --}}
+
+{{-- atau --}}
+
+{{-- @if(auth()->user()->is($post->author)) --}}
 <button type="button" class="btn btn-danger font-weight-bold" data-toggle="modal" data-target="#deleteModal">
   Delete
 </button>
@@ -52,5 +61,5 @@
     </div>
   </div>
 </div>
-@endauth
+{{-- @endif --}}
 @endsection

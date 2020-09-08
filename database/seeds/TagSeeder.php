@@ -2,6 +2,7 @@
 
 use App\Tag;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class TagSeeder extends Seeder
 {
@@ -12,11 +13,11 @@ class TagSeeder extends Seeder
      */
     public function run()
     {
-        $tags = collect(['Laravel', 'ReactJS', 'PHP', 'Javascript', 'HTML']);
+        $tags = collect(['Laravel', 'ReactJS', 'PHP', 'Javascript', 'HTML', 'React Native', 'Swift']);
         $tags->each(function ($t) {
             Tag::create([
                 'name' => $t,
-                'slug' => strtolower($t)
+                'slug' => Str::slug(strtolower($t))
             ]);
         });
     }
