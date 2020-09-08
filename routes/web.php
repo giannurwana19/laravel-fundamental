@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', 'HomeController');
+Route::get('/', 'PageController');
 
 Route::get('post', 'PostController@index')->name('post.index');
 Route::get('post/create', 'PostController@create')->name('post.create');
@@ -33,8 +34,9 @@ Route::view('contact', 'contact');
 Route::view('about', 'about');
 Route::view('login', 'login');
 
+Auth::routes();
 
-
+Route::get('/home', 'HomeController@index')->name('home');
 
 
 
@@ -99,3 +101,5 @@ Route::view('login', 'login');
 // yaitu name dan slug
 
 // Route::get('post/{category:name}/{post:slug}', 'PostController@show');
+
+

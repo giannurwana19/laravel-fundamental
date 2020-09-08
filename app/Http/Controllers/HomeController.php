@@ -2,22 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 class HomeController extends Controller
 {
-    // h: blok ini hanya comment saja
     /**
-     * Handle the incoming request.
+     * Create a new controller instance.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function __invoke()
+    public function __construct()
     {
-        $name = request()->name;
-        return view('home', compact('name'));
+        // dilindungi oleh middleware
+        // ketika kita sudah login, maka kita bisa ke home
+        $this->middleware('auth');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
+        return view('home');
     }
 }
-
-
-
-
