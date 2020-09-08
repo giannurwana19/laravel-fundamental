@@ -15,7 +15,7 @@ class AddCategoryIdToPostsTable extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             $table->foreignId('category_id')->nullable()->after('id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -4,9 +4,10 @@
 
 <h1>{{ $post->title }}</h1>
 <div class="text-secondary">
-  <a href="{{ route('category.show', $post->category->slug) }}">{{ $post->category->name }}</a> &middot; {{ $post->created_at->format('d F Y') }}
-  &middot; 
-  
+  <a href="{{ route('category.show', $post->category->slug) }}">{{ $post->category->name }}</a> &middot;
+  {{ $post->created_at->format('d F Y') }}
+  &middot;
+
   {{-- tags --}}
   @foreach ($post->tags as $tag)
   <a href="{{ route('tag.show', $tag->slug) }}" class="badge badge-info">{{ $tag->name }}</a>
@@ -16,6 +17,7 @@
 </div>
 <p>{{ $post->body }}</p>
 
+@auth
 <button type="button" class="btn btn-danger font-weight-bold" data-toggle="modal" data-target="#deleteModal">
   Delete
 </button>
@@ -50,4 +52,5 @@
     </div>
   </div>
 </div>
+@endauth
 @endsection
