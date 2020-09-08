@@ -17,7 +17,12 @@
     @endif
   </div>
   <div>
+    {{-- cek apakah user sudah login atau belum, bisa juga pakai @auth --}}
+    @if(auth()->check())
     <a href="{{ route('post.create') }}" class="btn btn-primary btn-sm font-weight-bold">+ Post</a>
+    @else
+    <a href="{{ route('login') }}" class="btn btn-danger btn-sm font-weight-bold">Login to create new post</a>
+    @endif
   </div>
 </div>
 
@@ -37,7 +42,9 @@
       </div>
       <div class="card-footer d-flex justify-content-between">
         <small>Published on {{ $post->created_at->diffForHumans() }}</small>
+        @auth
         <a href="{{ route('post.edit', $post->slug) }}" class="btn btn-success btn-sm font-weight-bold">Edit</a>
+        @endauth
       </div>
     </div>
   </div>

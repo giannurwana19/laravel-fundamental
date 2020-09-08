@@ -11,6 +11,14 @@ use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
+    // k: kita bisa gunakan __construct() jalankan middleware
+    // public function __construct()
+    // {
+        // p: lindungi semua method, harus login dulu
+        // p: kecuali index & show
+    //     $this->middleware('auth')->except(['index', 'show']);    
+    // }
+
     public function index()
     {
         $posts = Post::paginate(6);

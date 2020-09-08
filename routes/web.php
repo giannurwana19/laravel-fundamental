@@ -16,15 +16,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', 'PageController');
+Route::get('/', 'PostController@index')->name('post.index');
 
-Route::get('post', 'PostController@index')->name('post.index');
-Route::get('post/create', 'PostController@create')->name('post.create');
-Route::get('post/{post:slug}/edit', 'PostController@edit')->name('post.edit');
-Route::patch('post/{post:slug}', 'PostController@update')->name('post.update');
-Route::delete('post/{post:slug}', 'PostController@destroy')->name('post.destroy');
-Route::post('post/store', 'PostController@store')->name('post.store');
-Route::get('post/{post:slug}', 'PostController@show')->name('post.show');
+Route::middleware('auth')->group(function () {
+  Route::get('post', 'PostController@index')->name('post.index')->withoutMiddleware('auth'); // tanpa middleware
+  Route::get('post/create', 'PostController@create')->name('post.create');
+  Route::get('post/{post:slug}/edit', 'PostController@edit')->name('post.edit');
+  Route::patch('post/{post:slug}', 'PostController@update')->name('post.update');
+  Route::delete('post/{post:slug}', 'PostController@destroy')->name('post.destroy');
+  Route::post('post/store', 'PostController@store')->name('post.store');
+  Route::get('post/{post:slug}', 'PostController@show')->name('post.show')->withoutMiddleware('auth');
+});
 
 Route::get('category/{category:slug}', 'CategoryController@show')->name('category.show');
 
@@ -39,7 +41,11 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
+// k: contoh proteksi dengan middleware di route
+// Route::get('post/create', 'PostController@create')->middleware('auth')->name('post.create');
 
+// k: jika ingin menambahkan prefix
+// Route::prefix('blog')->middleware('auth')->group(function () {
 
 
 
