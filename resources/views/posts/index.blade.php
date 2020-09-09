@@ -42,9 +42,15 @@
       </div>
       <div class="card-footer d-flex justify-content-between">
         <small>Published on {{ $post->created_at->diffForHumans() }}</small>
-        @auth
+
+        {{-- ini dengan auth --}}
+        {{-- @if(auth()->user()->is($post->author)) --}}
+        
+        {{-- ini dengan policy --}}
+        @can('update', $post)
         <a href="{{ route('post.edit', $post->slug) }}" class="btn btn-success btn-sm font-weight-bold">Edit</a>
-        @endauth
+        @endcan
+        {{-- @endif --}}
       </div>
     </div>
   </div>

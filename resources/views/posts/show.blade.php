@@ -26,7 +26,10 @@
 
 {{-- atau --}}
 
-{{-- @if(auth()->user()->is($post->author)) --}}
+{{-- @if(auth()->user()->is($post->author )) --}}
+
+{{--dengan policy --}}
+@can('delete', $post)
 <button type="button" class="btn btn-danger font-weight-bold" data-toggle="modal" data-target="#deleteModal">
   Delete
 </button>
@@ -46,20 +49,22 @@
           <div>{{ $post->title }}</div>
           <small>{{ $post->created_at->format('d F Y') }}</small>
         </div>
-
+        
         <form action="{{ route('post.destroy', $post->slug) }}" method="POST">
           @csrf
           @method('DELETE')
-
+          
           <div class="button">
             <button type="button" class="btn btn-info btn-sm mr-1 font-weight-bold" data-dismiss="modal">Cancel</button>
             <button type="submit" class="btn btn-danger btn-sm font-weight-bold">Yes, Delete</button>
           </div>
         </form>
       </div>
-
+      
     </div>
   </div>
 </div>
+@endcan
+
 {{-- @endif --}}
 @endsection

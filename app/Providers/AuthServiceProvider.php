@@ -12,8 +12,10 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var array
      */
+
+    //  jika buat policy, daftarkan disini
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Post' => 'App\Policies\PostPolicy',
     ];
 
     /**
@@ -21,10 +23,17 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
+
+    // method ini akan membaca aturan yang ada di
+    // $protected $policies
     public function boot()
     {
         $this->registerPolicies();
 
-        //
+        // $user adalah nama modelnya
+        // pebandingan nya harus null
+        Gate::before(function ($user) {
+            return $user->isAdmin() ? true : null;
+        });
     }
 }

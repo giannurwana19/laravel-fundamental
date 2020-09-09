@@ -32,9 +32,8 @@ Route::get('category/{category:slug}', 'CategoryController@show')->name('categor
 
 Route::get('tag/{tag:slug}', 'TagController@show')->name('tag.show');
 
-Route::view('contact', 'contact');
-Route::view('about', 'about');
-Route::view('login', 'login');
+Route::view('contact', 'pages.contact');
+Route::view('about', 'pages.about');
 
 Auth::routes();
 

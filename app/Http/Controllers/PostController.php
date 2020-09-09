@@ -65,6 +65,9 @@ class PostController extends Controller
     // k: implementasikan method validateRequest() yg dibawah
     public function update(Post $post)
     {
+        // * dilindungi dengan policy
+        $this->authorize('update', $post);
+
         // panggil method yg dibawah
         $attr = $this->validateRequest();
         $attr['category_id'] = request()->category;
@@ -82,18 +85,25 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        if (auth()->user()->is($post->author)) {
-            $post->tags()->detach();
-            $post->delete();
+        $this->authorize('delete', $post);
 
-            session()->flash('success', 'The post was deleted!');
+        session()->flash('success', 'The post was deleted!');
 
-            return redirect('post');
-        } else {
-            session()->flash('error', "it wasn't your post!" );
+        return redirect('post');
 
-            return redirect()->route('post.index');
-        }
+        // k: bisa juga pake ini
+        // if (auth()->user()->is($post->author)) {
+        //     $post->tags()->detach();
+        //     $post->delete();
+
+        //     session()->flash('success', 'The post was deleted!');
+
+        //     return redirect('post');
+        // } else {
+        //     session()->flash('error', "it wasn't your post!" );
+
+        //     return redirect()->route('post.index');
+        // }
     }
 
     // method untuk validasi
@@ -106,4 +116,5 @@ class PostController extends Controller
             'tags' => 'array|required'
         ]);
     }
+
 }
