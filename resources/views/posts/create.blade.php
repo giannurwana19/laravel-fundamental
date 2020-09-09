@@ -8,8 +8,18 @@
     <div class="card">
       <div class="card-header">New Post</div>
       <div class="card-body">
-        <form action="{{ route('post.store') }}" method="POST">
+        <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
           @csrf
+
+          <div class="form-group">
+            <label for="tumbnail">Tumbnail</label>
+            <input type="file" name="tumbnail" value="{{ old('tumbnail') }}" class="form-control @error('tumbnail') is-invalid @enderror" id="tumbnail">
+            @error('tumbnail')
+            <div class="invalid-feedback">
+              {{ $message }}
+            </div>
+            @enderror
+          </div>
 
           <div class="form-group">
             <label for="title">Title</label>

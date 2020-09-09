@@ -8,9 +8,20 @@
     <div class="card">
       <div class="card-header">Update Post</div>
       <div class="card-body">
-        <form action="{{ route('post.update', $post->slug ) }}" method="POST">
+        <form action="{{ route('post.update', $post->slug ) }}" method="POST" enctype="multipart/form-data">
           @csrf
           @method('PATCH')
+
+          <div class="form-group">
+            <label for="tumbnail">Tumbnail</label>
+            <input type="file" name="tumbnail" value="{{ old('tumbnail') }}"
+              class="form-control @error('tumbnail') is-invalid @enderror" id="tumbnail">
+            @error('tumbnail')
+            <div class="invalid-feedback">
+              {{ $message }}
+            </div>
+            @enderror
+          </div>
 
           <div class="form-group">
             <label for="title">Title</label>
@@ -28,7 +39,8 @@
             <select name="category" id="category" class="custom-select @error('category') is-invalid @enderror">
               <option disabled selected>Choose One</option>
               @foreach ($categories as $category)
-              <option @if($category->id == $post->category_id) selected  @endif value="{{ $category->id }}">{{ $category->name }}</option>
+              <option @if($category->id == $post->category_id) selected @endif
+                value="{{ $category->id }}">{{ $category->name }}</option>
               @endforeach
             </select>
             @error('category')
@@ -42,7 +54,7 @@
             <label for="tags">Tag</label>
             <select name="tags[]" id="tags" class="custom-select select2 @error('tags') is-invalid @enderror" multiple>
               @foreach ($post->tags as $tag)
-                  <option selected value="{{ $tag->id }}">{{ $tag->name }}</option>
+              <option selected value="{{ $tag->id }}">{{ $tag->name }}</option>
               @endforeach
               @foreach ($tags as $tag)
               <option value="{{ $tag->id }}">{{ $tag->name }}</option>

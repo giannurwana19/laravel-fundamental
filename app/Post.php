@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    protected $fillable = ['title', 'slug', 'body', 'category_id'];
+    protected $fillable = ['title', 'slug', 'body', 'category_id', 'tumbnail'];
 
     public function category()
     {
@@ -24,6 +24,27 @@ class Post extends Model
     public function author()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    // k: cara panggilnya dengan $post->getImage
+    public function getImage()
+    {
+        if ($this->tumbnail) {
+            return asset('storage') . '/' . $this->tumbnail;
+        }
+
+        return asset('storage/images/posts/default-photo.jpg');
+    }
+
+    // jika kita ingin panggil sebagai attribute
+    // k: cara panggilnya dengan $post->image
+    public function getImageAttribute()
+    {
+        if($this->tumbnail){
+            return asset('storage') . '/' . $this->tumbnail;
+        }
+        
+        return asset('storage/images/posts/default-photo.jpg');
     }
 }
 

@@ -13,8 +13,10 @@ return [
     |
     */
 
+    // ketika kita ingin gunakan driver local, gunakan ini
+    // paste ke file key nya (FILESYSTEM_DRIVER) .env
     'default' => env('FILESYSTEM_DRIVER', 'local'),
-
+    
     /*
     |--------------------------------------------------------------------------
     | Default Cloud Filesystem Disk
@@ -25,7 +27,8 @@ return [
     | will be bound as the Cloud disk implementation in the container.
     |
     */
-
+    
+    // ketika kita ingin gunakan driver cloud, gunakan ini
     'cloud' => env('FILESYSTEM_CLOUD', 's3'),
 
     /*
@@ -48,6 +51,7 @@ return [
             'root' => storage_path('app'),
         ],
 
+        // ini driver local, disimpan di public
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

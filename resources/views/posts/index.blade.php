@@ -34,6 +34,9 @@
       <div class="card-header">
         {{ $post->title }}
       </div>
+      @if($post->image)
+      <img src="{{ $post->image }}" alt="" class="card-img-top">
+      @endif
       <div class="card-body">
         <div>
           <p>{{ Str::limit($post->body, 100, '...') }}</p>

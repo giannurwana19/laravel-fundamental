@@ -7,6 +7,7 @@ use App\Http\Requests\PostRequest;
 // use App\Post;
 // use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -36,13 +37,25 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $attr = $request->all();
+        $slug = Str::slug($request->title);
+        $attr['slug'] = $slug;
 
-        $attr['slug'] = Str::slug($request->title);
-        $attr['category_id'] = $request->category; // + category -> post
+        $tumbnail = $request->file('tumbnail');
+
+        if($tumbnail){
+            $tumbnail_name = $slug . "." . $tumbnail->extension();
+    
+            $tumbnail_url = $tumbnail->storeAs('images/posts', $tumbnail_name);
+        }else{
+            $tumbnail_url = null;
+        }
+
+        $attr['category_id'] = $request->category;
+        $attr['tumbnail'] = $tumbnail_url;
 
         // + post dari user yg login
         $post = auth()->user()->posts()->create($attr);
-        $post->tags()->attach($request->tags); // + tag -> post
+        $post->tags()->attach($request->tags);
 
         // buat session
         session()->flash('success', 'The post was created!');
@@ -63,7 +76,7 @@ class PostController extends Controller
     }
 
     // k: implementasikan method validateRequest() yg dibawah
-    public function update(Post $post)
+    public function update(Request $request,Post $post)
     {
         // * dilindungi dengan policy
         $this->authorize('update', $post);
@@ -72,6 +85,21 @@ class PostController extends Controller
         $attr = $this->validateRequest();
         $attr['category_id'] = request()->category;
 
+        $slug = Str::slug($request->title);
+        $attr['slug'] = $slug;
+
+        $tumbnail = $request->file('tumbnail');
+
+        if($tumbnail){
+            Storage::delete($post->tumbnail);
+            $thumbnail_name = $slug . "." . $tumbnail->extension();
+            $tumbnail_url = $tumbnail->storeAs('images/posts', $thumbnail_name);
+        }else{
+            $tumbnail_url = $post->tumbnail;
+        }
+
+        $attr['tumbnail'] = $tumbnail_url;
+        
         // untuk slug disarankan tidak diubah
         $post->update($attr);
 
@@ -87,23 +115,16 @@ class PostController extends Controller
     {
         $this->authorize('delete', $post);
 
+        if($post->tumbnail){
+            Storage::delete($post->tumbnail);
+        }
+
+        $post->tags()->detach();
+        $post->delete();
+
         session()->flash('success', 'The post was deleted!');
 
         return redirect('post');
-
-        // k: bisa juga pake ini
-        // if (auth()->user()->is($post->author)) {
-        //     $post->tags()->detach();
-        //     $post->delete();
-
-        //     session()->flash('success', 'The post was deleted!');
-
-        //     return redirect('post');
-        // } else {
-        //     session()->flash('error', "it wasn't your post!" );
-
-        //     return redirect()->route('post.index');
-        // }
     }
 
     // method untuk validasi
@@ -113,8 +134,8 @@ class PostController extends Controller
             'title' => 'required|min:3',
             'body' => 'required',
             'category' => 'required',
-            'tags' => 'array|required'
+            'tags' => 'array|required',
+            'tumbnail' => 'image|mimes:png,jpg,jpeg|max:2048'
         ]);
     }
-
 }
