@@ -22,7 +22,8 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::paginate(3);
+        // eager loading menggunakan with()
+        $posts = Post::with('author', 'tags', 'category')->latest()->paginate(6);
 
         return view('posts.index', compact('posts'));
     }
@@ -65,7 +66,8 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        return view('posts.show', compact('post'));
+        $posts = Post::with('author', 'tags', 'category')->where('category_id', $post->category_id)->latest()->limit(6)->get();
+        return view('posts.show', compact('post', 'posts'));
     }
 
     public function edit(Post $post)
