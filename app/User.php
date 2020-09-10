@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->username == 'giannurwana';
     }
+
+    public function avatar()
+    {
+        return asset('storage/images/avatar/default.png');
+    }
 }

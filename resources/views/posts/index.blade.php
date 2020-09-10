@@ -20,52 +20,69 @@
     {{-- cek apakah user sudah login atau belum, bisa juga pakai @auth --}}
     @if(auth()->check())
     <a href="{{ route('post.create') }}" class="btn btn-primary btn-sm font-weight-bold">+ Post</a>
-    @else
-    <a href="{{ route('login') }}" class="btn btn-danger btn-sm font-weight-bold">Login to create new post</a>
     @endif
   </div>
 </div>
 
 <div class="row">
+  <div class="col-md-6">
 
-  @forelse ($posts as $post)
-  <div class="col-md-4">
+    @forelse ($posts as $post)
     <div class="card my-3">
-      <div class="card-header">
-        {{ $post->title }}
-      </div>
       @if($post->image)
-      <img src="{{ $post->image }}" alt="" class="card-img-top">
+      <a href="{{ route('post.show', $post->slug) }}">
+        <img src="{{ $post->image }}" alt="" class="card-img-top">
+      </a>
       @endif
       <div class="card-body">
         <div>
-          <p>{{ Str::limit($post->body, 100, '...') }}</p>
-        </div>
-        <a href="{{ route('post.show', $post->slug) }}">Read More</a>
-      </div>
-      <div class="card-footer d-flex justify-content-between">
-        <small>Published on {{ $post->created_at->diffForHumans() }}</small>
+          <a href="{{ route('category.show', $post->category->slug) }}" class="text-secondary">
+            <small>{{ $post->category->name }}</small> |
+          </a>
 
-        {{-- ini dengan auth --}}
-        {{-- @if(auth()->user()->is($post->author)) --}}
-        
-        {{-- ini dengan policy --}}
-        @can('update', $post)
-        <a href="{{ route('post.edit', $post->slug) }}" class="btn btn-success btn-sm font-weight-bold">Edit</a>
-        @endcan
-        {{-- @endif --}}
+          @foreach ($post->tags as $tag)
+          <a href="{{ route('tag.show', $tag->slug) }}" class="badge badge-primary">
+            {{ $tag->name }}
+          </a>
+          @endforeach
+        </div>
+
+        <h5 class="mt-2">
+          <a href="{{ route('post.show', $post->slug) }}" class="text-reset text-decoration-none">
+            {{ $post->title }}
+          </a>
+        </h5>
+        <div>
+          {{ Str::limit($post->body, 130, '...') }}
+        </div>
+
+        <div class="d-flex mt-3 justify-content-between">
+
+          <div class="media align-items-center">
+            <img class="rounded-circle mr-2" width="30" src="{{ $post->author->avatar() }}" alt="">
+            <div class="media-body">
+              <div>
+                {{ $post->author->name }}
+              </div>
+            </div>
+          </div>
+
+          <div class="text-secondary">
+            <small>Published on {{ $post->created_at->diffForHumans() }}</small>
+          </div>
+
+        </div>
       </div>
     </div>
-  </div>
-  @empty
-  <div class="col">
-    <div class="alert alert-info">
-      There are no post!
+    @empty
+    <div class="col">
+      <div class="alert alert-info">
+        There are no post!
+      </div>
     </div>
+    @endforelse
+
   </div>
-  @endforelse
-  
-  
 </div>
 {{ $posts->links() }}
 @endsection
