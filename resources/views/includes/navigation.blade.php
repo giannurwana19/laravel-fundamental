@@ -10,16 +10,22 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <!-- Left Side Of Navbar -->
+
+      {{-- ketika method get, kita tdk perlu csrf --}}
+      <form action="{{ route('search.post') }}" method="GET" class="form-inline my-2 my-lg-0">
+        <input type="search" name="query" class="form-control form-control-sm mr-sm-2" placeholder="Search"
+          aria-label="Search">
+        <button class="btn btn-outline-success btn-sm my-2 my-sm-0" type="submit">Search</button>
+      </form>
+
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a href="{{ route('post.index') }}" class="nav-link">Post</a>
-        </li>
       </ul>
 
       <!-- Right Side Of Navbar -->
       <ul class="navbar-nav ml-auto">
         <!-- Authentication Links -->
         @guest
+
         <li class="nav-item">
           <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
         </li>
@@ -29,6 +35,10 @@
         </li>
         @endif
         @else
+        <li class="nav-item">
+          <a href="{{ route('post.index') }}" class="nav-link">Post</a>
+        </li>
+        
         <li class="nav-item dropdown">
           <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" v-pre>

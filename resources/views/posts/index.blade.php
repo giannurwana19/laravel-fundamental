@@ -84,5 +84,10 @@
 
   </div>
 </div>
-{{ $posts->links() }}
+
+{{-- secara default, akan mengambil file pagination::bootstrap4 --}}
+{{-- cara panggil style pagination yg lain: --}}
+{{-- {{ $posts->links('pagination::semantic-ui') }} --}}
+
+{{ $posts->links('') }}
 @endsection

@@ -32,6 +32,8 @@ Route::get('category/{category:slug}', 'CategoryController@show')->name('categor
 
 Route::get('tag/{tag:slug}', 'TagController@show')->name('tag.show');
 
+Route::get('search', 'SearchController@post')->name('search.post');
+
 Route::view('contact', 'pages.contact');
 Route::view('about', 'pages.about');
 
