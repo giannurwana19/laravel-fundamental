@@ -89,5 +89,5 @@
 {{-- cara panggil style pagination yg lain: --}}
 {{-- {{ $posts->links('pagination::semantic-ui') }} --}}
 
-{{ $posts->links('') }}
+{{ $posts->links() }}
 @endsection
