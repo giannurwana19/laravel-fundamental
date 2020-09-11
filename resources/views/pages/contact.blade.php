@@ -3,5 +3,5 @@
 @section('title', 'contact')
 
 @section('content')
-    contact
+contact
 @endsection

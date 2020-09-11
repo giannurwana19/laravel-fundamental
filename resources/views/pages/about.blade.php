@@ -2,5 +2,5 @@
 @section('title', 'about')
 
 @section('content')
-    about
+about
 @endsection
