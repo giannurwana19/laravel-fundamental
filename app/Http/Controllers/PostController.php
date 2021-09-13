@@ -118,7 +118,7 @@ class PostController extends Controller
 
         session()->flash('success', 'The post was deleted!');
 
-        return redirect('post');
+        return redirect('posts');
     }
 
     // method untuk validasi
