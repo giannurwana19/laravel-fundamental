@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light fixed-top bg-white shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/home') }}">
             {{ config('app.name', 'Laravel') }}
@@ -13,8 +13,8 @@
 
             {{-- ketika method get, kita tdk perlu csrf --}}
             <form action="{{ route('search.post') }}" method="GET" class="form-inline my-2 my-lg-0">
-                <input type="search" name="query" class="form-control form-control-sm mr-sm-2" placeholder="Search"
-                    aria-label="Search">
+                <input type="search" name="query" class="form-control form-control-sm mr-sm-2"
+                    placeholder="Search post here..." aria-label="Search">
                 <button class="btn btn-outline-success btn-sm my-2 my-sm-0" type="submit">Search</button>
             </form>
 
@@ -25,7 +25,9 @@
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
                 @guest
-
+                <li class="nav-item">
+                    <a href="{{ route('post.index') }}" class="nav-link">Post</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                 </li>

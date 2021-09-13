@@ -25,13 +25,12 @@
 </div>
 
 <div class="row">
+    @forelse ($posts as $post)
     <div class="col-md-6">
-
-        @forelse ($posts as $post)
-        <div class="card my-3">
+        <div class="card post-card my-3">
             @if($post->image)
             <a href="{{ route('post.show', $post->slug) }}">
-                <img src="{{ $post->image }}" alt="" class="card-img-top">
+                <img src="{{ $post->image }}" alt="" class="img-post card-img-top">
             </a>
             @endif
             <div class="card-body">
@@ -74,20 +73,23 @@
                 </div>
             </div>
         </div>
-        @empty
+    </div>
+    @empty
+    <div class="row">
         <div class="col">
             <div class="alert alert-info">
                 There are no post!
             </div>
         </div>
-        @endforelse
-
     </div>
+    @endforelse
 </div>
 
-{{-- secara default, akan mengambil file pagination::bootstrap4 --}}
+{{-- secara default, akan mengambil file agination::bootstrap4 --}}
 {{-- cara panggil style pagination yg lain: --}}
 {{-- {{ $posts->links('pagination::semantic-ui') }} --}}
 
-{{ $posts->links() }}
+<div class="mt-3">
+    {{ $posts->links() }}
+</div>
 @endsection

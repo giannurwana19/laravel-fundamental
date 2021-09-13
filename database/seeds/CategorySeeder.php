@@ -13,8 +13,8 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $categories = collect(['Framework', 'Code', 'Android', 'Web']);
-        $categories->each(function ($c){
+        $categories = collect(['Pemerintahan', 'Pendidikan', 'Kesehatan', 'Politik', 'Sosial & Budaya', 'Teknologi', 'Makanan', 'Fashion', 'Agama', 'Filsafat', 'Musik']);
+        $categories->each(function ($c) {
             Category::create([
                 'name' => $c,
                 'slug' => Str::slug(strtolower($c))

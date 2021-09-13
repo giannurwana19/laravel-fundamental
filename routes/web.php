@@ -18,14 +18,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'PostController@index')->name('post.index');
 
-Route::middleware('auth')->group(function () {
-  Route::get('post', 'PostController@index')->name('post.index')->withoutMiddleware('auth'); // tanpa middleware
-  Route::get('post/create', 'PostController@create')->name('post.create');
-  Route::get('post/{post:slug}/edit', 'PostController@edit')->name('post.edit');
-  Route::patch('post/{post:slug}', 'PostController@update')->name('post.update');
-  Route::delete('post/{post:slug}', 'PostController@destroy')->name('post.destroy');
-  Route::post('post/store', 'PostController@store')->name('post.store');
-  Route::get('post/{post:slug}', 'PostController@show')->name('post.show')->withoutMiddleware('auth');
+Route::middleware('auth')->prefix('posts')->group(function () {
+    Route::get('/', 'PostController@index')->name('post.index')->withoutMiddleware('auth'); // tanpa middleware
+    Route::get('/create', 'PostController@create')->name('post.create');
+    Route::get('/{post:slug}/edit', 'PostController@edit')->name('post.edit');
+    Route::patch('/{post:slug}', 'PostController@update')->name('post.update');
+    Route::delete('/{post:slug}', 'PostController@destroy')->name('post.destroy');
+    Route::post('/store', 'PostController@store')->name('post.store');
+    Route::get('/{post:slug}', 'PostController@show')->name('post.show')->withoutMiddleware('auth');
 });
 
 Route::get('category/{category:slug}', 'CategoryController@show')->name('category.show');
@@ -77,9 +77,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 //     return $request->path();
 // });
 
-// * hasilnya: contact 
+// * hasilnya: contact
 
-// p: tentang request 
+// p: tentang request
 // k: kita bisa menggunakan request dari class atau functio
 // ? dari class
 // Route::get('contact', function (Request $request) {
@@ -108,5 +108,3 @@ Route::get('/home', 'HomeController@index')->name('home');
 // yaitu name dan slug
 
 // Route::get('post/{category:name}/{post:slug}', 'PostController@show');
-
-

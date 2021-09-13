@@ -2,14 +2,12 @@
 @section('title', $post->title)
 @section('content')
 
-<div class="row">
-
-    <div class="col-md-8">
-        <img height="550" src="{{ $post->image }}" alt="" class="rounded w-100"
+<div class="row justify-content-center">
+    <div class="col-lg-8 mb-3">
+        <img src="{{ $post->image }}" alt="{{ $post->title }}" class="rounded img-fluid mb-3"
             style="object-fit: cover; object-position: center">
 
-
-        <h1>{{ $post->title }}</h1>
+        <h5>{{ $post->title }}</h5>
         <div class="text-secondary">
             <a href="{{ route('category.show', $post->category->slug) }}">{{ $post->category->name }}</a> &middot;
             {{ $post->created_at->format('d F Y') }}
@@ -21,19 +19,18 @@
             @endforeach
 
             <div class="media mt-2">
-                <img class="rounded-circle mr-3" width="50" src="{{ $post->author->avatar() }}" alt="">
+                <img class="rounded-circle mr-2" width="30" src="{{ $post->author->avatar() }}" alt="">
                 <div class="media-body">
-                    <div>
-                        {{ $post->author->name }}
-                    </div>
                     {{ '@' . $post->author->username }}
                 </div>
             </div>
 
-            <hr>
+
         </div>
         {{-- nl2br() : baris baru pada setiap paragraf --}}
-        <p>{!! nl2br($post->body) !!}</p>
+        <div class="mt-3">
+            <p>{!! nl2br($post->body) !!}</p>
+        </div>
 
         {{-- cek jika user nya yg punya post, maka bisa menghapus   --}}
         {{-- @if(auth()->user()->id == $post->user_id) --}}
@@ -95,13 +92,14 @@
 
         </div>
         @endcan
+        <hr>
 
         {{-- @endif --}}
 
     </div>
-
     {{-- tampilkan post dengan kategori yang sama dengan post saat ini --}}
-    <div class="col-md-4">
+    <div class="col-lg-4">
+        <h3>Related Post</h3>
         @foreach($posts as $post)
         <div class="card mb-3">
             <div class="card-body">

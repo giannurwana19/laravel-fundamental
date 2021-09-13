@@ -13,7 +13,7 @@ class TagSeeder extends Seeder
      */
     public function run()
     {
-        $tags = collect(['Laravel', 'ReactJS', 'PHP', 'Javascript', 'HTML', 'React Native', 'Swift']);
+        $tags = collect(['Kuliah', 'Sekolah', 'Kerja', 'Bisnis', 'Karier', 'Motivasi', 'Tips & Trik', 'Kecantikan', 'Blog', 'Web Development', 'Database', 'Mobile Development', 'Desktop', 'Komputer', 'Laptop', 'Review']);
         $tags->each(function ($t) {
             Tag::create([
                 'name' => $t,

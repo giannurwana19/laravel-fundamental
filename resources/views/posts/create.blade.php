@@ -2,7 +2,7 @@
 @section('title', 'Create New Post')
 
 @section('content')
-<div class="row">
+<div class="row justify-content-center">
     <div class="col-md-6">
 
         <div class="card">

@@ -12,14 +12,6 @@ use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
-    // k: kita bisa gunakan __construct() jalankan middleware
-    // public function __construct()
-    // {
-    // p: lindungi semua method, harus login dulu
-    // p: kecuali index & show
-    //     $this->middleware('auth')->except(['index', 'show']);    
-    // }
-
     public function index()
     {
         // eager loading menggunakan with()
@@ -43,11 +35,11 @@ class PostController extends Controller
 
         $tumbnail = $request->file('tumbnail');
 
-        if($tumbnail){
+        if ($tumbnail) {
             $tumbnail_name = $slug . "." . $tumbnail->extension();
-    
+
             $tumbnail_url = $tumbnail->storeAs('images/posts', $tumbnail_name);
-        }else{
+        } else {
             $tumbnail_url = null;
         }
 
@@ -78,7 +70,7 @@ class PostController extends Controller
     }
 
     // k: implementasikan method validateRequest() yg dibawah
-    public function update(Request $request,Post $post)
+    public function update(Request $request, Post $post)
     {
         // * dilindungi dengan policy
         $this->authorize('update', $post);
@@ -92,16 +84,16 @@ class PostController extends Controller
 
         $tumbnail = $request->file('tumbnail');
 
-        if($tumbnail){
+        if ($tumbnail) {
             Storage::delete($post->tumbnail);
             $thumbnail_name = $slug . "." . $tumbnail->extension();
             $tumbnail_url = $tumbnail->storeAs('images/posts', $thumbnail_name);
-        }else{
+        } else {
             $tumbnail_url = $post->tumbnail;
         }
 
         $attr['tumbnail'] = $tumbnail_url;
-        
+
         // untuk slug disarankan tidak diubah
         $post->update($attr);
 
@@ -117,7 +109,7 @@ class PostController extends Controller
     {
         $this->authorize('delete', $post);
 
-        if($post->tumbnail){
+        if ($post->tumbnail) {
             Storage::delete($post->tumbnail);
         }
 
