@@ -53,7 +53,7 @@ class PostController extends Controller
         // buat session
         session()->flash('success', 'The post was created!');
 
-        return redirect()->to('post');
+        return redirect()->to('posts');
     }
 
     public function show(Post $post)
@@ -102,7 +102,7 @@ class PostController extends Controller
         // buat session
         session()->flash('success', 'The post was updated!');
 
-        return redirect()->to('post');
+        return redirect()->to('posts');
     }
 
     public function destroy(Post $post)
